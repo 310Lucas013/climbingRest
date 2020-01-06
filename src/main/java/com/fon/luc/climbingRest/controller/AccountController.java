@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/accounts")
@@ -20,6 +21,11 @@ public class AccountController {
         System.out.println(account.toString());
         Account complete = new Account(account.getEmail(), account.getUid());
         return accountService.createAccount(complete);
+    }
+
+    @GetMapping
+    public List<Account> getAccounts() {
+        return accountService.getAccounts();
     }
 
 }

@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Data
@@ -20,6 +21,17 @@ public class Account {
     private Date createdAt;
     @Column(name = "uid")
     private String uid;
+
+//    @ManyToMany
+//    @JoinTable(
+//        name= "account_competition",
+//        joinColumns = @JoinColumn(name = "accountId"),
+//        inverseJoinColumns = @JoinColumn(name = "competitionId")
+//    )
+//    Set<Competition> competitions;
+
+    @OneToMany(mappedBy = "account")
+    Set<AccountCompetition> participations;
 
     public Account() {
     }

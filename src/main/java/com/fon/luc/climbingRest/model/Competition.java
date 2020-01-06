@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Data
@@ -19,6 +20,12 @@ public class Competition {
     private Date startDate;
     @Column(name = "endDate", nullable = false)
     private Date endDate;
+
+//    @ManyToMany(mappedBy = "competitions")
+//    Set<Account> accounts;
+
+    @OneToMany(mappedBy = "competition")
+    Set<AccountCompetition> participations;
 
     public Competition() {
     }
