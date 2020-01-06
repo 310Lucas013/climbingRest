@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/accountcompetitions")
@@ -42,5 +43,15 @@ public class AccountCompetitionController {
         }
         return accountCompetitionService.createAccountCompetition(complete);
     }
+
+    @RequestMapping(value= "/{id}", method = RequestMethod.GET)
+    public List<AccountCompetition> getAccountCompetitions(@PathVariable("id") Long id) {
+        return accountCompetitionService.getAccountCompetitions(id);
+    }
+
+//    @GetMapping
+//    public List<AccountCompetition> getAccountCompetitions() {
+//        return accountCompetitionService.getAccountCompetitions();
+//    }
 
 }

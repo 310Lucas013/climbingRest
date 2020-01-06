@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import java.util.List;
+
 @Service
 @CrossOrigin(origins = "http://localhost:4200")
 public class AccountCompetitionService {
@@ -17,6 +19,10 @@ public class AccountCompetitionService {
 
     public AccountCompetition createAccountCompetition(AccountCompetition accountCompetition) {
         return accountCompetitionRepository.save(accountCompetition);
+    }
+
+    public List<AccountCompetition> getAccountCompetitions(Long id) {
+        return accountCompetitionRepository.findByCompetition_Id(id);
     }
 
 }
