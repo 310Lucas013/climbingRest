@@ -1,34 +1,63 @@
 package com.fon.luc.climbingRest.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fon.luc.climbingRest.embeddable.AccountCompetitionKey;
 import com.fon.luc.climbingRest.enums.Group;
 import lombok.Data;
+import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Data
-@Table(name = "AccountCompetition")
+@Table(name = "AccountCompetition",
+        uniqueConstraints=
+        @UniqueConstraint(columnNames={"accountId", "competitionId"}))
 public class AccountCompetition {
 
-    @EmbeddedId
-    AccountCompetitionKey id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
 
+//    @EmbeddedId
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @JsonIgnore
+//    AccountCompetitionKey id;
+    @JsonBackReference
     @ManyToOne
-    @MapsId("accountId")
+//    @MapsId("accountId")
     @JoinColumn(name = "accountId")
     Account account;
 
+    @JsonBackReference
     @ManyToOne
-    @MapsId("competitionId")
+//    @MapsId("competitionId")
     @JoinColumn(name = "competitionId")
     Competition competition;
 
-    @Column(name = "group")
     @Enumerated(EnumType.STRING)
-    private Group group;
+    @Column(name = "groupName")
+    Group groupName;
 
-    public Group getGroup() {
-        return group;
+    public AccountCompetition() {
+
     }
+
+    public AccountCompetition(Account account, Competition competition) {
+        this.account = account;
+        this.competition = competition;
+    }
+
+    public AccountCompetition(Account account, Competition competition, Group group) {
+        this.account = account;
+        this.competition = competition;
+        this.groupName = group;
+    }
+
+    public Group getGroupName() {
+        return groupName;
+    }
+
+//    public AccountCompetitionKey getId() { return id;}
 }

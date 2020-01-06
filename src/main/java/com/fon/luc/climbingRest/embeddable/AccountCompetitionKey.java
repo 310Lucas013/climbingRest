@@ -1,7 +1,6 @@
 package com.fon.luc.climbingRest.embeddable;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Embeddable
