@@ -14,4 +14,8 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200")
 public interface AccountCompetitionRepository extends JpaRepository<AccountCompetition, Long> {
     List<AccountCompetition> findByCompetition_Id(Long id);
+
+    int countAccountCompetitionByCompetitionNameContaining(String name);
+
+    List<AccountCompetition> findAccountCompetitionByCompetition_Name(String name);
 }

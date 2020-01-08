@@ -25,4 +25,12 @@ public class AccountCompetitionService {
         return accountCompetitionRepository.findByCompetition_Id(id);
     }
 
+    public int countParticipantsByCompetitionName(String name) {
+        return accountCompetitionRepository.countAccountCompetitionByCompetitionNameContaining(name);
+    }
+
+    public List<AccountCompetition> getAccountCompetitionsByCompetitionName(String name) {
+        return accountCompetitionRepository.findAccountCompetitionByCompetition_Name(name);
+    }
+
 }

@@ -49,6 +49,16 @@ public class AccountCompetitionController {
         return accountCompetitionService.getAccountCompetitions(id);
     }
 
+    @RequestMapping(value= "/participants/{name}", method = RequestMethod.GET)
+    public int getParticipantsByCompetitionName(@PathVariable("name") String name) {
+        return accountCompetitionService.countParticipantsByCompetitionName(name);
+    }
+
+    @RequestMapping(value= "/name/{name}", method = RequestMethod.GET)
+    public List<AccountCompetition> getAccountCompetitionsByCompetitionName(@PathVariable("name") String name) {
+        return accountCompetitionService.getAccountCompetitionsByCompetitionName(name);
+    }
+
 //    @GetMapping
 //    public List<AccountCompetition> getAccountCompetitions() {
 //        return accountCompetitionService.getAccountCompetitions();

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import java.util.Collection;
+
 @Service
 @CrossOrigin(origins = "http://localhost:4200")
 public class CompetitionService {
@@ -16,4 +18,6 @@ public class CompetitionService {
     public Competition createCompetition(Competition competition) {return competitionRepository.save(competition);}
 
     public Competition findByName(String name) {return competitionRepository.findByName(name);}
+
+    public Collection<Competition> getAllCompetitions() {return competitionRepository.findAll();}
 }

@@ -59,5 +59,9 @@ public class AccountCompetition {
         return groupName;
     }
 
-//    public AccountCompetitionKey getId() { return id;}
+    public Account getAccount() {
+        return account;
+    }
+
+    //    public AccountCompetitionKey getId() { return id;}
 }
