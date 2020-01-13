@@ -16,12 +16,10 @@ public class RouteCompetition {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "routeId")
     Route route;
 
-    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "competitionId")
     Competition competition;
@@ -32,6 +30,30 @@ public class RouteCompetition {
 
     public RouteCompetition(Route route, Competition competition) {
         this.route = route;
+        this.competition = competition;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Route getRoute() {
+        return route;
+    }
+
+    public void setRoute(Route route) {
+        this.route = route;
+    }
+
+    public Competition getCompetition() {
+        return competition;
+    }
+
+    public void setCompetition(Competition competition) {
         this.competition = competition;
     }
 }

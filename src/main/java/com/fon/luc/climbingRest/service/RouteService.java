@@ -29,4 +29,12 @@ public class RouteService {
         return routeRepository.getFilterRoute(firstFrom);
     }
 
+    public Route findByName(String name) {
+        return this.routeRepository.getRouteByName(name);
+    }
+
+    public Route findById(Long id) {
+        return this.routeRepository.getRouteById(id);
+    }
+
 }

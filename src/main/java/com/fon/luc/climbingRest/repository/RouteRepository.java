@@ -20,4 +20,8 @@ public interface RouteRepository extends JpaRepository<Route, Long> {
     @Query(value = "SELECT COUNT (DISTINCT r.route_id) FROM route r",
             nativeQuery = true)
     Long getFilterRouteCount();
+
+    Route getRouteByName(String name);
+
+    Route getRouteById(Long id);
 }

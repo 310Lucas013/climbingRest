@@ -4,24 +4,21 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Calendar;
 import java.util.Date;
 
 @Entity
 @Data
-@Table(name = "AccountRoute",
-        uniqueConstraints=
-        @UniqueConstraint(columnNames={"accountId", "routeId"}))
+@Table(name = "AccountRoute")
 public class AccountRoute {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "accountId")
     Account account;
 
-    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "routeId")
     Route route;
@@ -40,11 +37,13 @@ public class AccountRoute {
         this.route = route;
     }
 
-    public AccountRoute(Account account, Route route, int zoneReached, Date attemptDate) {
+    public AccountRoute(Account account, Route route, int zoneReached) {
         this.account = account;
         this.route = route;
         this.zoneReached = zoneReached;
-        this.attemptDate = attemptDate;
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, 1);
+        this.attemptDate = calendar.getTime();
     }
 
     public int getZoneReached() {
