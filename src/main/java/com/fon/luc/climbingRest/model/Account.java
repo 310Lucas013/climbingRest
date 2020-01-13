@@ -23,6 +23,12 @@ public class Account {
     private Date createdAt;
     @Column(name = "uid")
     private String uid;
+    @Column(name = "firstName")
+    private String firstName;
+    @Column(name = "middleName")
+    private String middleName;
+    @Column(name = "lastName")
+    private String lastName;
 
 //    @ManyToMany
 //    @JoinTable(
@@ -78,5 +84,17 @@ public class Account {
 
     public void setUid(String uid) {
         this.uid = uid;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }
