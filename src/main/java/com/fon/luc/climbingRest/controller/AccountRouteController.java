@@ -42,4 +42,9 @@ public class AccountRouteController {
         return accountRouteService.createAccountRoute(complete);
     }
 
+    @RequestMapping(value= "/accountroutecount/{email}", method = RequestMethod.GET)
+    public int getAccountRouteCountByEmail(@PathVariable("email") String email) {
+        return accountRouteService.countRoutesByAccountEmail(email);
+    }
+
 }

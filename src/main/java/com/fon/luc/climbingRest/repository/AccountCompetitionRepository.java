@@ -18,4 +18,6 @@ public interface AccountCompetitionRepository extends JpaRepository<AccountCompe
     int countAccountCompetitionByCompetitionNameContaining(String name);
 
     List<AccountCompetition> findAccountCompetitionByCompetition_Name(String name);
+
+    List<AccountCompetition> findAll();
 }

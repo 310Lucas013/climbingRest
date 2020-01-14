@@ -18,5 +18,10 @@ public class AccountRouteService {
         return accountRouteRepository.save(accountRoute);
     }
 
+    public int countRoutesByAccountEmail(String email) {
+        return accountRouteRepository.countAccountRouteByAccount_Email(email);
+    }
+
+
 
 }

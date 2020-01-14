@@ -24,13 +24,13 @@ public class AccountCompetition {
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    @JsonIgnore
 //    AccountCompetitionKey id;
-    @JsonBackReference
+//    @JsonBackReference
     @ManyToOne
 //    @MapsId("accountId")
     @JoinColumn(name = "accountId")
     Account account;
 
-    @JsonBackReference
+//    @JsonBackReference
     @ManyToOne
 //    @MapsId("competitionId")
     @JoinColumn(name = "competitionId")

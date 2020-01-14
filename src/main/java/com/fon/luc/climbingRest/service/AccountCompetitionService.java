@@ -33,4 +33,8 @@ public class AccountCompetitionService {
         return accountCompetitionRepository.findAccountCompetitionByCompetition_Name(name);
     }
 
+    public List<AccountCompetition> getAccountCompetitions() {
+        return accountCompetitionRepository.findAll();
+    }
+
 }

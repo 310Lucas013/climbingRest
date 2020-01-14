@@ -59,9 +59,9 @@ public class AccountCompetitionController {
         return accountCompetitionService.getAccountCompetitionsByCompetitionName(name);
     }
 
-//    @GetMapping
-//    public List<AccountCompetition> getAccountCompetitions() {
-//        return accountCompetitionService.getAccountCompetitions();
-//    }
+    @GetMapping
+    public List<AccountCompetition> getAccountCompetitions() {
+        return accountCompetitionService.getAccountCompetitions();
+    }
 
 }
