@@ -1,5 +1,6 @@
 package com.fon.luc.climbingRest.repository;
 
+import com.fon.luc.climbingRest.model.Route;
 import com.fon.luc.climbingRest.model.RouteCompetition;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -11,4 +12,6 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200")
 public interface RouteCompetitionRepository extends JpaRepository<RouteCompetition, Long> {
     List<RouteCompetition> findByCompetition_Id(Long id);
+
+    RouteCompetition findRouteCompetitionByRoute_Id(Long id);
 }

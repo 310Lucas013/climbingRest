@@ -97,4 +97,20 @@ public class Account {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
 }

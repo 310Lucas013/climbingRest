@@ -15,5 +15,11 @@ public class Route {
     @Column(name = "name")
     private String name;
 
+    public long getId() {
+        return id;
+    }
 
+    public String getName() {
+        return name;
+    }
 }

@@ -53,4 +53,16 @@ public class AccountRoute {
     public Date getAttemptDate() {
         return attemptDate;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Route getRoute() {
+        return route;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
 }

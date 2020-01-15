@@ -33,7 +33,9 @@ public class AccountController {
 
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
     public ResponseEntity<Object> updateAccount(@RequestBody UpdateAccount updateAccount) {
-        accountService.updateAccount(updateAccount);
+        System.out.println("Updated requested");
+        Account account = accountService.updateAccount(updateAccount);
+        System.out.println(account);
         return new ResponseEntity<>("Account is updated successfully", HttpStatus.OK);
     }
 

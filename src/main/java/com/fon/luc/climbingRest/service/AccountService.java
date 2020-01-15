@@ -29,11 +29,15 @@ public class AccountService {
     }
 
     public Account updateAccount(UpdateAccount updateAccount) {
-        Account account = this.findByEmail(updateAccount.email);
+        Account account = new Account();
+        System.out.println(updateAccount.email);
+        account = accountRepository.getAccountByEmail(updateAccount.email);
+        System.out.println(account);
         account.setUid(updateAccount.uid);
         account.setFirstName(updateAccount.firstName);
         account.setMiddleName(updateAccount.middleName);
         account.setLastName(updateAccount.lastName);
+        System.out.println(account);
         return accountRepository.save(account);
     }
 

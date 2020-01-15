@@ -40,6 +40,9 @@ public class AccountCompetition {
     @Column(name = "groupName")
     Group groupName;
 
+    @Column(name = "score")
+    int score;
+
     public AccountCompetition() {
 
     }
@@ -55,12 +58,27 @@ public class AccountCompetition {
         this.groupName = group;
     }
 
+    public AccountCompetition(Account account, Competition competition, Group group, int score) {
+        this.account = account;
+        this.competition = competition;
+        this.groupName = group;
+        this.score = score;
+    }
+
     public Group getGroupName() {
         return groupName;
     }
 
     public Account getAccount() {
         return account;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 
     //    public AccountCompetitionKey getId() { return id;}
