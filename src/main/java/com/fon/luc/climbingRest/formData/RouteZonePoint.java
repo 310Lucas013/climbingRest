@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class RouteZonePoint {
     public Route route;
-    // First value is the zone, second is the count of people.
+    // First value is the zone, second is the count of people/ points.
     public int[][] zonepoints;
 
     public RouteZonePoint(Route route, int[][] zone) {

@@ -3,10 +3,8 @@ package com.fon.luc.climbingRest.service;
 import com.fon.luc.climbingRest.formData.MaxRoute;
 import com.fon.luc.climbingRest.formData.RouteZonePoint;
 import com.fon.luc.climbingRest.formData.Scoreboard;
-import com.fon.luc.climbingRest.model.Account;
-import com.fon.luc.climbingRest.model.AccountRoute;
-import com.fon.luc.climbingRest.model.Route;
-import com.fon.luc.climbingRest.model.RouteCompetition;
+import com.fon.luc.climbingRest.model.*;
+import com.fon.luc.climbingRest.repository.AccountCompetitionRepository;
 import com.fon.luc.climbingRest.repository.AccountRouteRepository;
 import com.fon.luc.climbingRest.repository.RouteCompetitionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +23,8 @@ public class AccountRouteService {
     AccountRouteRepository accountRouteRepository;
     @Autowired
     RouteCompetitionRepository routeCompetitionRepository;
+    @Autowired
+    AccountCompetitionRepository accountCompetitionRepository;
 
     public AccountRoute createAccountRoute(AccountRoute accountRoute) {
         AccountRoute returnable = accountRouteRepository.save(accountRoute);
@@ -50,7 +50,7 @@ public class AccountRouteService {
         System.out.println(routeCompetition.getCompetition().getId());
         List<AccountRoute> accountRoutes = accountRouteRepository.getAccountRoutesByCompetitionId(routeCompetition.getCompetition().getId());
         System.out.println(accountRoutes);
-        // Going through all the AccountRoutes that belong to the competition.
+        // Going through all the AccountRoutes that belong to the competition. --> working
         for (AccountRoute ar : accountRoutes) {
             // Checking if tempAccount is not the same as the current one.
             if (!tempAccount.equals(ar.getAccount())) {
@@ -127,25 +127,114 @@ public class AccountRouteService {
         // Giving the points to the things.
         RouteZonePoint tempRouteZonePoint = new RouteZonePoint();
         List<RouteZonePoint> routeZonePoints = new ArrayList<RouteZonePoint>();
+        // todo format scoreboard to routezonepoint -> working
+        // Foreach Scoreboard check if they are in the route
         for (Scoreboard sb : scoreboards) {
+            // Foreach MaxRoute add one to the route zone.
             for (MaxRoute mr : sb.maxRoutes) {
                 boolean routeZonePointsAlreadyExists = false;
+                // match the routezone point to the thing.
                 for (RouteZonePoint rzp : routeZonePoints) {
                     if (rzp.route == mr.route) {
                         routeZonePointsAlreadyExists = true;
-                        rzp.zonepoints[mr.maxZone-1][1] += 1;
+                        rzp.zonepoints[mr.maxZone - 1][1] += 1;
                     }
                 }
                 if (!routeZonePointsAlreadyExists) {
+                    System.out.println("created new one");
+                    // Create New Route Zone Point
                     RouteZonePoint newRouteZonePoint = new RouteZonePoint(mr.route);
+                    // Add the maxRoute of an account to the route.
+                    newRouteZonePoint.zonepoints[mr.maxZone - 1][1] += 1;
                     routeZonePoints.add(newRouteZonePoint);
                 }
             }
         }
         System.out.println(routeZonePoints);
-        // todo make for loop that changes count to actual points.
-        // todo add the points of the accounts.
+        // todo make loop that adds the higher zone count to the one below -> working
+        for (RouteZonePoint addRzp : routeZonePoints) {
+            for (int i = 2; i >= 0; i--) {
+                addRzp.zonepoints[i][1] += addRzp.zonepoints[i + 1][1];
+                System.out.println(addRzp.zonepoints[i][1]);
+            }
+        }
+        // todo make for loop that changes count to actual points. -> Working.
+        System.out.println(routeZonePoints.size());
+        System.out.println(routeZonePoints);
+        for (RouteZonePoint convertRzp : routeZonePoints) {
+            for (int j = 0; j < 4; j++) {
+                if (convertRzp.zonepoints[j][1] != 0) {
+                    int zonePointsValue = 0;
+                    switch (j) {
+                        case 0:
+                            zonePointsValue = 250;
+                            break;
+                        case 1:
+                            zonePointsValue = 500;
+                            break;
+                        case 2:
+                            zonePointsValue = 750;
+                            break;
+                        case 3:
+                            zonePointsValue = 1000;
+                            break;
+                        default:
+                            throw new NullPointerException();
+                    }
+                    convertRzp.zonepoints[j][1] = (int) (zonePointsValue / convertRzp.zonepoints[j][1]);
+                }
+            }
+        }
+        System.out.println(routeZonePoints);
+        // todo add the points of the accounts. -> Working?
+        // Temporary AccountCompetition to have it to add points to the account competition.
+        AccountCompetition tempAccountCompetition = new AccountCompetition();
+        // GetAccountCompetitions
+        List<AccountCompetition> accountCompetitions = new ArrayList<AccountCompetition>();
+        accountCompetitions = accountCompetitionRepository.findByCompetition_Id(routeCompetition.getCompetition().getId());
+        // Looking through the RouteZonePoints per person.
+        for (Scoreboard accSb : scoreboards) {
+            // SetAccount To TempAccount
+            tempAccount = accSb.getAccount();
+            for (AccountCompetition accountCompetition : accountCompetitions) {
+                if (accountCompetition.getAccount() == tempAccount) {
+                    // SetAccountCompetition To TempAccountCompetition
+                    tempAccountCompetition = accountCompetition;
+                    for (MaxRoute accMr : accSb.maxRoutes) {
+                        for (RouteZonePoint accRzp : routeZonePoints) {
+                            if (accMr.getRoute() == accRzp.getRoute()) {
+                                // Checks which zone was reached by the person.
+                                int maxReachedZone = 0;
+                                switch (accMr.maxZone) {
+                                    case 1:
+                                        maxReachedZone = 0;
+                                        break;
+                                    case 2:
+                                        maxReachedZone = 1;
+                                        break;
+                                    case 3:
+                                        maxReachedZone = 2;
+                                        break;
+                                    case 4:
+                                        maxReachedZone = 3;
+                                        break;
+                                    default:
+                                        throw new NullPointerException();
+                                }
+                                tempAccountCompetition.setScore(tempAccountCompetition.getScore() + accRzp.zonepoints[maxReachedZone][1]);
+                            }
+                        }
+                    }
+                    System.out.println(tempAccountCompetition);
+                    accountCompetitionRepository.save(tempAccountCompetition);
+                }
+            }
+        }
+        // Foreach Rzp
+        // Foreach Scoreboard.
+        // SetPoints.
         // todo save to the database the point the accounts have.
+        // Save Account
     }
 }
 
