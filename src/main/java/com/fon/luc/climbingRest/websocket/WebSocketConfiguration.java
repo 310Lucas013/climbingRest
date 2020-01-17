@@ -26,12 +26,13 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
         config.enableSimpleBroker("/topic/", "/queue/");
+//        config.enableStompBrokerRelay("/topic").setRelayHost("http://localhost").setRelayPort(8100);
         config.setApplicationDestinationPrefixes("/app");
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/greeting").setHandshakeHandler(new DefaultHandshakeHandler() {
+        registry.addEndpoint("/greeting").setAllowedOrigins("*").setHandshakeHandler(new DefaultHandshakeHandler() {
 
             //Get sessionId from request and set it in Map attributes
             public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler,
@@ -41,7 +42,8 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
                     HttpSession session = servletRequest.getServletRequest().getSession();
                     attributes.put("sessionId", session.getId());
                 }
+                System.out.println("Tried to connect");
                 return true;
-            }}).withSockJS();
+            }});
     }
 }

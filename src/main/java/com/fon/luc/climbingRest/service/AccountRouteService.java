@@ -201,6 +201,7 @@ public class AccountRouteService {
                     // SetAccountCompetition To TempAccountCompetition
                     tempAccountCompetition = accountCompetition;
                     for (MaxRoute accMr : accSb.maxRoutes) {
+                        // Foreach Rzp
                         for (RouteZonePoint accRzp : routeZonePoints) {
                             if (accMr.getRoute() == accRzp.getRoute()) {
                                 // Checks which zone was reached by the person.
@@ -221,20 +222,18 @@ public class AccountRouteService {
                                     default:
                                         throw new NullPointerException();
                                 }
+                                // SetPoints.
                                 tempAccountCompetition.setScore(tempAccountCompetition.getScore() + accRzp.zonepoints[maxReachedZone][1]);
                             }
                         }
                     }
                     System.out.println(tempAccountCompetition);
+                    // Save Account
+                    // todo save to the database
                     accountCompetitionRepository.save(tempAccountCompetition);
                 }
             }
         }
-        // Foreach Rzp
-        // Foreach Scoreboard.
-        // SetPoints.
-        // todo save to the database the point the accounts have.
-        // Save Account
     }
 }
 
