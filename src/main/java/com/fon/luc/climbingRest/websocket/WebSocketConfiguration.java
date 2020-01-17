@@ -1,40 +1,47 @@
 package com.fon.luc.climbingRest.websocket;
 
-import lombok.AllArgsConstructor;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.messaging.converter.MessageConverter;
-import org.springframework.messaging.handler.invocation.HandlerMethodArgumentResolver;
-import org.springframework.messaging.handler.invocation.HandlerMethodReturnValueHandler;
-import org.springframework.messaging.simp.config.AbstractMessageBrokerConfiguration;
-import org.springframework.messaging.simp.config.ChannelRegistration;
-import org.springframework.messaging.simp.config.MessageBrokerRegistry;
-import org.springframework.messaging.simp.user.SimpUserRegistry;
-import org.springframework.web.socket.config.annotation.*;
+//import org.springframework.context.annotation.Configuration;
+//import org.springframework.messaging.simp.config.MessageBrokerRegistry;
+//import org.springframework.web.socket.config.annotation.*;
 
-import java.util.List;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.server.ServerHttpRequest;
+import org.springframework.http.server.ServerHttpResponse;
+import org.springframework.http.server.ServletServerHttpRequest;
+import org.springframework.messaging.simp.config.MessageBrokerRegistry;
+import org.springframework.web.socket.WebSocketHandler;
+import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
+import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
+import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
+import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
+
+import javax.servlet.http.HttpSession;
+import java.util.Map;
+
 
 @Configuration
-@ConfigurationProperties
 @EnableWebSocketMessageBroker
-@EnableConfigurationProperties(WebSocketProperties.class)
-@AllArgsConstructor
-public class WebSocketConfiguration extends AbstractWebSocketMessageBrokerConfigurer {
-
-    private WebSocketProperties properties;
+public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer {
 
     @Override
-    public void configureMessageBroker(MessageBrokerRegistry registry) {
-        registry.enableSimpleBroker(properties.getTopicPrefix());
-        registry.enableStompBrokerRelay(properties.getTopicPrefix());
-        registry.setApplicationDestinationPrefixes(properties.getApplicationPrefix());
+    public void configureMessageBroker(MessageBrokerRegistry config) {
+        config.enableSimpleBroker("/topic/", "/queue/");
+        config.setApplicationDestinationPrefixes("/app");
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint(properties.getEndpoint()).setAllowedOrigins(properties.getAllowedOrigins());
-        registry.addEndpoint(properties.getEndpoint()).setAllowedOrigins(properties.getAllowedOrigins()).withSockJS();
-    }
+        registry.addEndpoint("/greeting").setHandshakeHandler(new DefaultHandshakeHandler() {
 
+            //Get sessionId from request and set it in Map attributes
+            public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler,
+                                           Map attributes) throws Exception {
+                if (request instanceof ServletServerHttpRequest) {
+                    ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) request;
+                    HttpSession session = servletRequest.getServletRequest().getSession();
+                    attributes.put("sessionId", session.getId());
+                }
+                return true;
+            }}).withSockJS();
+    }
 }
