@@ -33,7 +33,7 @@ public class AccountRouteService {
     }
 
     public int countRoutesByAccountEmail(String email) {
-        return accountRouteRepository.countAccountRouteByAccount_Email(email);
+        return accountRouteRepository.countDistinctRouteIdByAccount_Email(email);
     }
 
     public void updateScoreboard(AccountRoute accountRoute) {

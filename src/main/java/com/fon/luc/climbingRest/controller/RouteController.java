@@ -1,6 +1,7 @@
 package com.fon.luc.climbingRest.controller;
 
 import com.fon.luc.climbingRest.formData.RouteFilter;
+import com.fon.luc.climbingRest.model.Route;
 import com.fon.luc.climbingRest.service.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,19 @@ public class RouteController {
     @RequestMapping(value = "/getfilterroute", method = RequestMethod.POST)
     public ResponseEntity<Object> getFilterRoute(@RequestBody RouteFilter filter) {
         return new ResponseEntity<Object>(routeService.getFilterRoute(filter), HttpStatus.OK);
+    }
+
+    @PostMapping("/{name}")
+    public Route createRoute(@PathVariable("name") String name) {
+        Route route = new Route(name);
+        System.out.println(route);
+        return routeService.createRoute(route);
+    }
+
+    @PostMapping("/saveroute")
+    public Route createRoute(@RequestBody Route route) {
+        // todo when this gets used actually do something with this.
+        return route;
     }
 
 

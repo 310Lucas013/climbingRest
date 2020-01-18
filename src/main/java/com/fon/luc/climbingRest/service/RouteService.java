@@ -37,4 +37,6 @@ public class RouteService {
         return this.routeRepository.getRouteById(id);
     }
 
+    public Route createRoute(Route route) {return this.routeRepository.save(route);}
+
 }

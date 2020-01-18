@@ -18,5 +18,5 @@ public interface AccountRouteRepository extends JpaRepository<AccountRoute, Long
             "WHERE rc.competition_id = :competitionId", nativeQuery = true)
     List<AccountRoute> getAccountRoutesByCompetitionId(@Param("competitionId") Long CompetitionId);
 
-    int countAccountRouteByAccount_Email(String email);
+    int countDistinctRouteIdByAccount_Email(String email);
 }
