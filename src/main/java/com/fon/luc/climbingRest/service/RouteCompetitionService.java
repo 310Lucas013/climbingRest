@@ -22,8 +22,8 @@ public class RouteCompetitionService {
         return routeCompetition;
     }
 
-    public RouteCompetition getRouteCompetitionByRouteId(Long id) {
-        return this.routeCompetitionRepository.findRouteCompetitionByRoute_Id(id);
+    public RouteCompetition findRouteCompetitionByCompetition_IdAndRoute_Id(Long competitionId, Long routeId) {
+        return this.routeCompetitionRepository.findRouteCompetitionByCompetition_IdAndRoute_Id(competitionId, routeId);
     }
 
     public RouteCompetition createRouteCompetition(RouteCompetition routeCompetition) {

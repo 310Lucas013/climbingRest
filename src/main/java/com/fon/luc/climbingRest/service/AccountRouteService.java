@@ -7,6 +7,7 @@ import com.fon.luc.climbingRest.model.*;
 import com.fon.luc.climbingRest.repository.AccountCompetitionRepository;
 import com.fon.luc.climbingRest.repository.AccountRouteRepository;
 import com.fon.luc.climbingRest.repository.RouteCompetitionRepository;
+import net.minidev.json.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -28,7 +29,12 @@ public class AccountRouteService {
 
     public AccountRoute createAccountRoute(AccountRoute accountRoute) {
         AccountRoute returnable = accountRouteRepository.save(accountRoute);
-        updateScoreboard(accountRoute);
+        return returnable;
+    }
+
+    public AccountRoute createAccountRouteCompetition(AccountRoute accountRoute, Long competitionId) {
+        AccountRoute returnable = accountRouteRepository.save(accountRoute);
+        updateScoreboard(accountRoute, competitionId);
         return returnable;
     }
 
@@ -36,7 +42,7 @@ public class AccountRouteService {
         return accountRouteRepository.countDistinctRouteIdByAccount_Email(email);
     }
 
-    public void updateScoreboard(AccountRoute accountRoute) {
+    public void updateScoreboard(AccountRoute accountRoute, Long competitionId) {
         // Scoreboard
         List<Scoreboard> scoreboards = new ArrayList<Scoreboard>();
         // TemporaryAccount for checking points and routes that belong to a user.
@@ -44,7 +50,9 @@ public class AccountRouteService {
         // TemporaryScoreboard for updating routes that belong to a user.
         Scoreboard tempScoreboard = new Scoreboard();
         // get competition by Route
-        RouteCompetition routeCompetition = routeCompetitionRepository.findRouteCompetitionByRoute_Id(accountRoute.getRoute().getId());
+        System.out.println(competitionId);
+        System.out.println(accountRoute.getRoute().getId());
+        RouteCompetition routeCompetition = routeCompetitionRepository.findRouteCompetitionByCompetition_IdAndRoute_Id(competitionId, accountRoute.getRoute().getId());
         System.out.println(routeCompetition + "Row 39");
         // get all accountRouteBy Competition
         System.out.println(routeCompetition.getCompetition().getId());

@@ -20,10 +20,10 @@ public class AccountController {
     AccountService accountService;
 
     @PostMapping
-    public Account createAccount(@Valid @RequestBody Account account) {
+    public ResponseEntity<Account> createAccount(@Valid @RequestBody Account account) {
         System.out.println(account.toString());
         Account complete = new Account(account.getEmail(), account.getUid());
-        return accountService.createAccount(complete);
+        return new ResponseEntity<Account>(accountService.createAccount(complete), HttpStatus.CREATED);
     }
 
     @GetMapping

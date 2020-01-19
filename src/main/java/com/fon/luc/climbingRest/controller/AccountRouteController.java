@@ -3,6 +3,7 @@ package com.fon.luc.climbingRest.controller;
 import com.fon.luc.climbingRest.enums.Group;
 import com.fon.luc.climbingRest.formData.AddAccountCompetition;
 import com.fon.luc.climbingRest.formData.AddAccountRoute;
+import com.fon.luc.climbingRest.formData.AddAccountRouteCompetition;
 import com.fon.luc.climbingRest.model.*;
 import com.fon.luc.climbingRest.service.AccountRouteService;
 import com.fon.luc.climbingRest.service.AccountService;
@@ -40,6 +41,24 @@ public class AccountRouteController {
             complete = new AccountRoute(account, route, zone);
         }
         return accountRouteService.createAccountRoute(complete);
+    }
+
+    @PostMapping(value = "/competition")
+    public AccountRoute createAccountRouteCompetition(@Valid @RequestBody AddAccountRouteCompetition addAccountRouteCompetition) {
+        System.out.println(addAccountRouteCompetition.toString());
+        AccountRoute complete;
+        Account account = accountService.findByEmail(addAccountRouteCompetition.email);
+        System.out.println(account);
+        Route route = routeService.findById(addAccountRouteCompetition.routeId);
+        System.out.println(route.toString());
+        if (addAccountRouteCompetition.zone == 0) {
+            complete = new AccountRoute(account, route);
+        }
+        else {
+            int zone = addAccountRouteCompetition.zone;
+            complete = new AccountRoute(account, route, zone);
+        }
+        return accountRouteService.createAccountRouteCompetition(complete, addAccountRouteCompetition.competitionId);
     }
 
     @RequestMapping(value= "/accountroutecount/{email}", method = RequestMethod.GET)

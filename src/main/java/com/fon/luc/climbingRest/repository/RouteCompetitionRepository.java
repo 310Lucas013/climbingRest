@@ -13,5 +13,5 @@ import java.util.List;
 public interface RouteCompetitionRepository extends JpaRepository<RouteCompetition, Long> {
     List<RouteCompetition> findByCompetition_Id(Long id);
 
-    RouteCompetition findRouteCompetitionByRoute_Id(Long id);
+    RouteCompetition findRouteCompetitionByCompetition_IdAndRoute_Id(Long competitionId, Long routeId);
 }
