@@ -58,8 +58,8 @@ public class AccountControllerIntegrationTests {
     @Test
     public void createAccountAPI()
             throws Exception {
-        Account account = new Account("abcd@gmail.com", "asdfjlasjdfl123123");
-        account.setId(100);
+        Account account = new Account("abcde@gmail.com", "asdfjdfdlasjdfl123123");
+        account.setId(99);
 
         given(accountService.createAccount(account)).willReturn(account);
 
@@ -73,7 +73,7 @@ public class AccountControllerIntegrationTests {
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isCreated());
-                //.andExpect(MockMvcResultMatchers.jsonPath("$.email").exists())
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.email").exists());
                 //.andExpect(MockMvcResultMatchers.jsonPath("$.email").value("abcd@gmail.com"));
     }
 
@@ -94,9 +94,27 @@ public class AccountControllerIntegrationTests {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(status().isCreated());
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.email").isNotEmpty())
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$").isNotEmpty());
 //                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("abcd@gmail.com"));
+    }
+
+    @Test
+    public void getAccountByEmailAPI()
+            throws Exception {
+        Account account = new Account("abc@gmail.com", "asdfjlasjdfl123123");
+
+        List<Account> allAccounts = Arrays.asList(account);
+
+        given(accountService.findByEmail("abc@gmail.com")).willReturn(account);
+
+        mvc.perform(MockMvcRequestBuilders
+                .get("/accounts/{email}", "abc@gmail.com")
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.email").isNotEmpty())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("abc@gmail.com"));
     }
 
     public static String asJsonString(final Object obj) {

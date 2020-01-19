@@ -70,6 +70,16 @@ public class Account {
         this.createdAt = calendar.getTime();
     }
 
+    public Account(Long id, String email, Date createdAt, String uid, String firstName, String middleName, String lastName) {
+        this.id = id;
+        this.email = email;
+        this.createdAt = createdAt;
+        this.uid = uid;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -96,6 +106,10 @@ public class Account {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public Date getCreatedAt() {
