@@ -73,6 +73,28 @@ public class AccountControllerIntegrationTests {
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isCreated());
+                //.andExpect(MockMvcResultMatchers.jsonPath("$.email").exists())
+                //.andExpect(MockMvcResultMatchers.jsonPath("$.email").value("abcd@gmail.com"));
+    }
+
+    @Test
+    public void updateAccountAPI()
+            throws Exception {
+        Account account = new Account("abcd@gmail.com", "asdfjlasjdfl123123");
+        account.setId(100);
+
+        given(accountService.createAccount(account)).willReturn(account);
+
+        Gson gson = new Gson();
+        String json = gson.toJson(account);
+
+        mvc.perform(MockMvcRequestBuilders
+                .put("/accounts/update")
+                .content(asJsonString(account))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isCreated());
 //                .andExpect(MockMvcResultMatchers.jsonPath("$.email").isNotEmpty())
 //                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("abcd@gmail.com"));
     }
