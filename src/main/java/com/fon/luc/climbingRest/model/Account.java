@@ -80,6 +80,15 @@ public class Account {
         this.lastName = lastName;
     }
 
+    public Account(String email, Date createdAt, String uid, String firstName, String middleName, String lastName) {
+        this.email = email;
+        this.createdAt = createdAt;
+        this.uid = uid;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+    }
+
     public String getEmail() {
         return email;
     }

@@ -25,25 +25,25 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/topic/", "/queue/");
-//        config.enableStompBrokerRelay("/topic").setRelayHost("http://localhost").setRelayPort(8100);
+        config.enableSimpleBroker("/topic");
         config.setApplicationDestinationPrefixes("/app");
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/greeting").setAllowedOrigins("*").setHandshakeHandler(new DefaultHandshakeHandler() {
-
-            //Get sessionId from request and set it in Map attributes
-            public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler,
-                                           Map attributes) throws Exception {
-                if (request instanceof ServletServerHttpRequest) {
-                    ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) request;
-                    HttpSession session = servletRequest.getServletRequest().getSession();
-                    attributes.put("sessionId", session.getId());
-                }
-                System.out.println("Tried to connect");
-                return true;
-            }});
+//        registry.addEndpoint("/greeting").setAllowedOrigins("*").setHandshakeHandler(new DefaultHandshakeHandler() {
+//
+//            //Get sessionId from request and set it in Map attributes
+//            public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler,
+//                                           Map attributes) throws Exception {
+//                if (request instanceof ServletServerHttpRequest) {
+//                    ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) request;
+//                    HttpSession session = servletRequest.getServletRequest().getSession();
+//                    attributes.put("sessionId", session.getId());
+//                }
+//                System.out.println("Tried to connect");
+//                return true;
+//            }});
+        registry.addEndpoint("/socket").setAllowedOrigins("*").withSockJS();
     }
 }
