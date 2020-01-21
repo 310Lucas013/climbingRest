@@ -163,7 +163,7 @@ public class AccountRouteService {
         for (RouteZonePoint addRzp : routeZonePoints) {
             for (int i = 2; i >= 0; i--) {
                 addRzp.zonepoints[i][1] += addRzp.zonepoints[i + 1][1];
-                System.out.println(addRzp.zonepoints[i][1]);
+                System.out.println(addRzp.zonepoints[i][1] + ", route: " + addRzp.getRoute().getId());
             }
         }
         // todo make for loop that changes count to actual points. -> Working.
@@ -191,6 +191,9 @@ public class AccountRouteService {
                     }
                     convertRzp.zonepoints[j][1] = (int) (zonePointsValue / convertRzp.zonepoints[j][1]);
                 }
+                else {
+                    convertRzp.zonepoints[j][1] = (int) 0;
+                }
             }
         }
         System.out.println(routeZonePoints);
@@ -201,19 +204,30 @@ public class AccountRouteService {
         List<AccountCompetition> accountCompetitions = new ArrayList<AccountCompetition>();
         accountCompetitions = accountCompetitionRepository.findByCompetition_Id(routeCompetition.getCompetition().getId());
         // Looking through the RouteZonePoints per person.
+        System.out.println(207);
         for (Scoreboard accSb : scoreboards) {
             // SetAccount To TempAccount
+            System.out.println(210);
             tempAccount = accSb.getAccount();
+            System.out.println(212);
             for (AccountCompetition accountCompetition : accountCompetitions) {
-                if (accountCompetition.getAccount() == tempAccount) {
+                System.out.println(214);
+                if (accountCompetition.getAccount().getEmail().equals(tempAccount.getEmail())) {
+                    System.out.println(216);
                     // SetAccountCompetition To TempAccountCompetition
                     tempAccountCompetition = accountCompetition;
+                    tempAccountCompetition.setScore(0);
+                    System.out.println(218);
                     for (MaxRoute accMr : accSb.maxRoutes) {
+                        System.out.println(221);
                         // Foreach Rzp
                         for (RouteZonePoint accRzp : routeZonePoints) {
+                            System.out.println(224);
                             if (accMr.getRoute() == accRzp.getRoute()) {
+                                System.out.println(226);
                                 // Checks which zone was reached by the person.
                                 int maxReachedZone = 0;
+                                System.out.println("Enters Switch Case");
                                 switch (accMr.maxZone) {
                                     case 1:
                                         maxReachedZone = 0;
@@ -232,6 +246,7 @@ public class AccountRouteService {
                                 }
                                 // SetPoints.
                                 tempAccountCompetition.setScore(tempAccountCompetition.getScore() + accRzp.zonepoints[maxReachedZone][1]);
+                                System.out.println(tempAccountCompetition.getAccount().getFirstName() + ", score: " + tempAccountCompetition.getScore() + ", reached: " + accRzp.zonepoints[maxReachedZone][1]);
                             }
                         }
                     }

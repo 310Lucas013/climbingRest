@@ -4,6 +4,7 @@ import com.fon.luc.climbingRest.messages.AddAccountRouteCompetitionMessage;
 import com.fon.luc.climbingRest.messages.AddAccountRouteMessage;
 import com.fon.luc.climbingRest.messages.CreateAccountRouteMessage;
 import com.fon.luc.climbingRest.model.Account;
+import com.fon.luc.climbingRest.model.AccountCompetition;
 import com.fon.luc.climbingRest.model.AccountRoute;
 import com.fon.luc.climbingRest.model.Route;
 import com.fon.luc.climbingRest.service.AccountCompetitionService;
@@ -22,6 +23,9 @@ import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/socket")
@@ -53,7 +57,20 @@ public class PostWebController {
         System.out.println("Method Called");
         //return "Hello";
          //this.template.convertAndSend("/topic/send", new AccountRoute(account, route, arcm.getZone()));
-        return gson.toJson(accountRouteService.createAccountRoute(new AccountRoute(account, route, arcm.getZone())), AccountRoute.class);
+        AccountRoute accountRoute = accountRouteService.createAccountRouteCompetition(new AccountRoute(account, route, arcm.getZone()), arcm.getCompetitionId());
+        System.out.println("Reached Zone 1");
+        List<AccountCompetition> accountCompetitions = new ArrayList<AccountCompetition>();
+        System.out.println("Reached Zone 2");
+        if (accountRoute != null) {
+            System.out.println("Reached Zone 3");
+            accountCompetitions = accountCompetitionService.getAccountCompetitions(arcm.getCompetitionId());
+        }
+        System.out.println("Reached Zone 4");
+        String returnString = gson.toJson(accountCompetitions);
+        System.out.println(returnString);
+        System.out.println(accountCompetitions);
+        return returnString;
+        // return gson.toJson(accountCompetitions, AccountCompetition.class);
     }
 
     @MessageExceptionHandler
