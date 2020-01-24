@@ -24,20 +24,16 @@ public class AccountService {
 
     public Account findByEmail(String email) {
         Account account = accountRepository.getAccountByEmail(email);
-        // System.out.println(account);
         return account;
     }
 
     public Account updateAccount(UpdateAccount updateAccount) {
         Account account = new Account();
-        // System.out.println(updateAccount.email);
         account = accountRepository.getAccountByEmail(updateAccount.email);
-        // System.out.println(account);
         account.setUid(updateAccount.uid);
         account.setFirstName(updateAccount.firstName);
         account.setMiddleName(updateAccount.middleName);
         account.setLastName(updateAccount.lastName);
-        // System.out.println(account);
         return accountRepository.save(account);
     }
 

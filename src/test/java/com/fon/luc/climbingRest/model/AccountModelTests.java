@@ -14,6 +14,7 @@ public class AccountModelTests {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, 1);
 
+        Long id = (long)1;
         String email = "LLHVerman@outlook.com";
         Date createdAt = calendar.getTime();
         String uid = "ajskldfjqowe123lkajsd";
@@ -21,7 +22,7 @@ public class AccountModelTests {
         String middleName = "Van";
         String lastName = "Meer";
 
-        Account account = new Account(email, createdAt, uid, firstName, middleName, lastName);
+        Account account = new Account(id, email, createdAt, uid, firstName, middleName, lastName);
 
         assertNotNull(account.getId());
         assertEquals(email, account.getEmail());

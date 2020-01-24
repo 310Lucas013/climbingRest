@@ -17,7 +17,6 @@ public class RouteCompetitionService {
 
     public List<RouteCompetition> getRouteCompetitions(Long id) {
         List<RouteCompetition> routeCompetition = this.routeCompetitionRepository.findByCompetition_Id(id);
-        // System.out.println(routeCompetition);
         return routeCompetition;
     }
 

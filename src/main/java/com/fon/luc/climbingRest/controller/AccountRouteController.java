@@ -25,12 +25,9 @@ public class AccountRouteController {
 
     @PostMapping
     public AccountRoute createAccountRoute(@Valid @RequestBody AddAccountRoute addAccountRoute) {
-        // System.out.println(addAccountRoute.toString());
         AccountRoute complete;
         Account account = accountService.findByEmail(addAccountRoute.email);
-        // System.out.println(account);
         Route route = routeService.findById(addAccountRoute.routeId);
-        // System.out.println(route.toString());
         if (addAccountRoute.zone == 0) {
             complete = new AccountRoute(account, route);
         }
@@ -43,12 +40,9 @@ public class AccountRouteController {
 
     @PostMapping(value = "/competition")
     public AccountRoute createAccountRouteCompetition(@Valid @RequestBody AddAccountRouteCompetition addAccountRouteCompetition) {
-        // System.out.println(addAccountRouteCompetition.toString());
         AccountRoute complete;
         Account account = accountService.findByEmail(addAccountRouteCompetition.email);
-        // System.out.println(account);
         Route route = routeService.findById(addAccountRouteCompetition.routeId);
-        // System.out.println(route.toString());
         if (addAccountRouteCompetition.zone == 0) {
             complete = new AccountRoute(account, route);
         }

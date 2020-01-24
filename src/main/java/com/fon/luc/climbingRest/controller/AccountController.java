@@ -21,7 +21,6 @@ public class AccountController {
 
     @PostMapping
     public ResponseEntity<Account> createAccount(@Valid @RequestBody Account account) {
-        // System.out.println(account.toString());
         Account complete = new Account(account.getEmail(), account.getUid());
         return new ResponseEntity<Account>(accountService.createAccount(complete), HttpStatus.CREATED);
     }
@@ -33,9 +32,7 @@ public class AccountController {
 
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
     public ResponseEntity<Object> updateAccount(@RequestBody UpdateAccount updateAccount) {
-        // System.out.println("Updated requested");
         Account account = accountService.updateAccount(updateAccount);
-        // System.out.println(account);
         return new ResponseEntity<>("Account is updated successfully", HttpStatus.OK);
     }
 

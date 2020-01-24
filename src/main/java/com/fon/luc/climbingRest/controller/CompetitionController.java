@@ -18,7 +18,6 @@ public class CompetitionController {
 
     @PostMapping
     public Competition createCompetition(@Valid @RequestBody Competition competition) {
-        // System.out.println(competition.toString());
         Competition complete = new Competition(competition.getName(), competition.getStartDate(), competition.getEndDate());
         return competitionService.createCompetition(complete);
     }

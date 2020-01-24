@@ -29,13 +29,11 @@ public class RouteController {
     @PostMapping("/{name}")
     public Route createRoute(@PathVariable("name") String name) {
         Route route = new Route(name);
-        // System.out.println(route);
         return routeService.createRoute(route);
     }
 
     @PostMapping("/saveroute")
     public Route createRoute(@RequestBody Route route) {
-        // todo when this gets used actually do something with this.
         return route;
     }
 

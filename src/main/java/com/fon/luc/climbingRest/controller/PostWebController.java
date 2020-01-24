@@ -45,24 +45,16 @@ public class PostWebController {
     @MessageMapping("/send")
     @SendTo("/topic/send")
     public String save(@Payload String message) {
-        // System.out.println("Method Called");
         AddAccountRouteCompetitionMessage arcm = new AddAccountRouteCompetitionMessage();
         arcm = gson.fromJson(message, AddAccountRouteCompetitionMessage.class);
         Account account = accountService.findByEmail(arcm.getEmail());
         Route route = routeService.findById(arcm.getRouteId());
-        // System.out.println("Method Called");
         AccountRoute accountRoute = accountRouteService.createAccountRouteCompetition(new AccountRoute(account, route, arcm.getZone()), arcm.getCompetitionId());
-        // System.out.println("Reached Zone 1");
         List<AccountCompetition> accountCompetitions = new ArrayList<AccountCompetition>();
-        // System.out.println("Reached Zone 2");
         if (accountRoute != null) {
-            // System.out.println("Reached Zone 3");
             accountCompetitions = accountCompetitionService.getAccountCompetitions(arcm.getCompetitionId());
         }
-        // System.out.println("Reached Zone 4");
         String returnString = gson.toJson(accountCompetitions);
-        // System.out.println(returnString);
-        // System.out.println(accountCompetitions);
         return returnString;
     }
 

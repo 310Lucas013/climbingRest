@@ -28,16 +28,13 @@ public class RouteCompetitionController {
     @ResponseBody
     public List<RouteCompetition> getRouteCompetitions(@PathVariable("id") Long id) {
         List<RouteCompetition> returnedValue = this.routeCompetitionService.getRouteCompetitions(id);
-        // System.out.println(returnedValue);
         return returnedValue;
     }
 
     @PostMapping("/{routename}/{competitionname}")
     public RouteCompetition createRouteCompetion(@PathVariable("routename") String routeName, @PathVariable("competitionname") String competitionName) {
         Route route = routeService.findByName(routeName);
-        // System.out.println(route);
         Competition competition = competitionService.findByName(competitionName);
-        // System.out.println(competition);
         RouteCompetition routeCompetition = new RouteCompetition(route, competition);
         return routeCompetitionService.createRouteCompetition(routeCompetition);
     }
