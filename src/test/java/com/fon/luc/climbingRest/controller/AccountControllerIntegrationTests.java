@@ -7,7 +7,6 @@ import com.google.gson.Gson;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -73,8 +72,6 @@ public class AccountControllerIntegrationTests {
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isCreated());
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.email").exists());
-                //.andExpect(MockMvcResultMatchers.jsonPath("$.email").value("abcd@gmail.com"));
     }
 
     @Test
@@ -96,7 +93,6 @@ public class AccountControllerIntegrationTests {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").isNotEmpty());
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("abcd@gmail.com"));
     }
 
     @Test

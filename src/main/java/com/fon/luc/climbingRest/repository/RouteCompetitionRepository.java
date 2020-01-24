@@ -1,6 +1,5 @@
 package com.fon.luc.climbingRest.repository;
 
-import com.fon.luc.climbingRest.model.Route;
 import com.fon.luc.climbingRest.model.RouteCompetition;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

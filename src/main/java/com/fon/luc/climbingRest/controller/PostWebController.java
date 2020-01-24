@@ -1,8 +1,6 @@
 package com.fon.luc.climbingRest.controller;
 
 import com.fon.luc.climbingRest.messages.AddAccountRouteCompetitionMessage;
-import com.fon.luc.climbingRest.messages.AddAccountRouteMessage;
-import com.fon.luc.climbingRest.messages.CreateAccountRouteMessage;
 import com.fon.luc.climbingRest.model.Account;
 import com.fon.luc.climbingRest.model.AccountCompetition;
 import com.fon.luc.climbingRest.model.AccountRoute;
@@ -18,8 +16,6 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.messaging.simp.annotation.SendToUser;
-import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,28 +45,25 @@ public class PostWebController {
     @MessageMapping("/send")
     @SendTo("/topic/send")
     public String save(@Payload String message) {
-        System.out.println("Method Called");
+        // System.out.println("Method Called");
         AddAccountRouteCompetitionMessage arcm = new AddAccountRouteCompetitionMessage();
         arcm = gson.fromJson(message, AddAccountRouteCompetitionMessage.class);
         Account account = accountService.findByEmail(arcm.getEmail());
         Route route = routeService.findById(arcm.getRouteId());
-        System.out.println("Method Called");
-        //return "Hello";
-         //this.template.convertAndSend("/topic/send", new AccountRoute(account, route, arcm.getZone()));
+        // System.out.println("Method Called");
         AccountRoute accountRoute = accountRouteService.createAccountRouteCompetition(new AccountRoute(account, route, arcm.getZone()), arcm.getCompetitionId());
-        System.out.println("Reached Zone 1");
+        // System.out.println("Reached Zone 1");
         List<AccountCompetition> accountCompetitions = new ArrayList<AccountCompetition>();
-        System.out.println("Reached Zone 2");
+        // System.out.println("Reached Zone 2");
         if (accountRoute != null) {
-            System.out.println("Reached Zone 3");
+            // System.out.println("Reached Zone 3");
             accountCompetitions = accountCompetitionService.getAccountCompetitions(arcm.getCompetitionId());
         }
-        System.out.println("Reached Zone 4");
+        // System.out.println("Reached Zone 4");
         String returnString = gson.toJson(accountCompetitions);
-        System.out.println(returnString);
-        System.out.println(accountCompetitions);
+        // System.out.println(returnString);
+        // System.out.println(accountCompetitions);
         return returnString;
-        // return gson.toJson(accountCompetitions, AccountCompetition.class);
     }
 
     @MessageExceptionHandler

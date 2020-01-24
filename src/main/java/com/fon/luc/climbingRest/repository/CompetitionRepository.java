@@ -1,6 +1,5 @@
 package com.fon.luc.climbingRest.repository;
 
-import com.fon.luc.climbingRest.model.Account;
 import com.fon.luc.climbingRest.model.Competition;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

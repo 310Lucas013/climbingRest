@@ -1,7 +1,6 @@
 package com.fon.luc.climbingRest.messages;
 
 import com.fon.luc.climbingRest.model.Account;
-import com.fon.luc.climbingRest.model.AccountRoute;
 import com.fon.luc.climbingRest.model.Route;
 
 public class CreateAccountRouteMessage {

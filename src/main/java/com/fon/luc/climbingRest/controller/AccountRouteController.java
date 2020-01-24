@@ -1,7 +1,5 @@
 package com.fon.luc.climbingRest.controller;
 
-import com.fon.luc.climbingRest.enums.Group;
-import com.fon.luc.climbingRest.formData.AddAccountCompetition;
 import com.fon.luc.climbingRest.formData.AddAccountRoute;
 import com.fon.luc.climbingRest.formData.AddAccountRouteCompetition;
 import com.fon.luc.climbingRest.model.*;
@@ -27,12 +25,12 @@ public class AccountRouteController {
 
     @PostMapping
     public AccountRoute createAccountRoute(@Valid @RequestBody AddAccountRoute addAccountRoute) {
-        System.out.println(addAccountRoute.toString());
+        // System.out.println(addAccountRoute.toString());
         AccountRoute complete;
         Account account = accountService.findByEmail(addAccountRoute.email);
-        System.out.println(account);
+        // System.out.println(account);
         Route route = routeService.findById(addAccountRoute.routeId);
-        System.out.println(route.toString());
+        // System.out.println(route.toString());
         if (addAccountRoute.zone == 0) {
             complete = new AccountRoute(account, route);
         }
@@ -45,12 +43,12 @@ public class AccountRouteController {
 
     @PostMapping(value = "/competition")
     public AccountRoute createAccountRouteCompetition(@Valid @RequestBody AddAccountRouteCompetition addAccountRouteCompetition) {
-        System.out.println(addAccountRouteCompetition.toString());
+        // System.out.println(addAccountRouteCompetition.toString());
         AccountRoute complete;
         Account account = accountService.findByEmail(addAccountRouteCompetition.email);
-        System.out.println(account);
+        // System.out.println(account);
         Route route = routeService.findById(addAccountRouteCompetition.routeId);
-        System.out.println(route.toString());
+        // System.out.println(route.toString());
         if (addAccountRouteCompetition.zone == 0) {
             complete = new AccountRoute(account, route);
         }

@@ -1,13 +1,10 @@
 package com.fon.luc.climbingRest.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
-import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Set;
 
 @Entity
 @Data
@@ -29,19 +26,6 @@ public class Account {
     private String middleName;
     @Column(name = "lastName")
     private String lastName;
-
-//    @ManyToMany
-//    @JoinTable(
-//        name= "account_competition",
-//        joinColumns = @JoinColumn(name = "accountId"),
-//        inverseJoinColumns = @JoinColumn(name = "competitionId")
-//    )
-//    Set<Competition> competitions;
-
-
-//    @JsonManagedReference
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "account")
-//    Set<AccountCompetition> participations;
 
     public Account() {
     }

@@ -7,7 +7,6 @@ import com.fon.luc.climbingRest.enums.SecuringMethod;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.awt.*;
 import java.util.Calendar;
 import java.util.Date;
 

@@ -1,13 +1,9 @@
 package com.fon.luc.climbingRest.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fon.luc.climbingRest.embeddable.AccountCompetitionKey;
 import com.fon.luc.climbingRest.enums.Group;
 import lombok.Data;
-import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Data
@@ -20,19 +16,11 @@ public class AccountCompetition {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-//    @EmbeddedId
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @JsonIgnore
-//    AccountCompetitionKey id;
-//    @JsonBackReference
     @ManyToOne
-//    @MapsId("accountId")
     @JoinColumn(name = "accountId")
     Account account;
 
-//    @JsonBackReference
     @ManyToOne
-//    @MapsId("competitionId")
     @JoinColumn(name = "competitionId")
     Competition competition;
 
@@ -81,5 +69,4 @@ public class AccountCompetition {
         this.score = score;
     }
 
-    //    public AccountCompetitionKey getId() { return id;}
 }

@@ -1,6 +1,5 @@
 package com.fon.luc.climbingRest.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;

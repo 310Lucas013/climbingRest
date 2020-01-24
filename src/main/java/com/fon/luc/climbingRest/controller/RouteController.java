@@ -6,7 +6,6 @@ import com.fon.luc.climbingRest.service.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -30,7 +29,7 @@ public class RouteController {
     @PostMapping("/{name}")
     public Route createRoute(@PathVariable("name") String name) {
         Route route = new Route(name);
-        System.out.println(route);
+        // System.out.println(route);
         return routeService.createRoute(route);
     }
 

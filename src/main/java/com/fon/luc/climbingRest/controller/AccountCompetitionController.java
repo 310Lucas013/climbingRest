@@ -28,12 +28,12 @@ public class AccountCompetitionController {
 
     @PostMapping
     public AccountCompetition createAccountCompetition(@Valid @RequestBody AddAccountCompetition addAccountCompetition) {
-        System.out.println(addAccountCompetition.toString());
+        // System.out.println(addAccountCompetition.toString());
         AccountCompetition complete;
         Account account = accountService.findByEmail(addAccountCompetition.email);
-        System.out.println(account);
+        // System.out.println(account);
         Competition competition = competitionService.findByName(addAccountCompetition.name);
-        System.out.println(competition.toString());
+        // System.out.println(competition.toString());
         if (addAccountCompetition.group == null) {
             complete = new AccountCompetition(account, competition);
         }
